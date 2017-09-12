@@ -54,7 +54,7 @@ if [ ${REMOVE} -eq 0 ]; then
 else
 	echo "Preparing to delete users: '${USERS[@]}'"
 	read -p "Are you sure? " -r
-	echo    # (optional) move to a new line
+	echo # move to a new line
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
 		echo "Deleting user list:"
 		for USER in "${USERS[@]}"; do
