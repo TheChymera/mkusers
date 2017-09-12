@@ -1,9 +1,9 @@
 #checks if run as root:
-#if ! [ "`whoami`" == "root" ]
-#then
-#	echo "`basename $0`: must be root."
-#	exit 1
-#fi
+if ! [ "`whoami`" == "root" ]
+then
+	echo "`basename $0`: must be root."
+	exit 1
+fi
 
 # setting default variables
 REMOVE=0
