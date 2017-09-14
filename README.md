@@ -39,7 +39,7 @@ If you have chosen the manual installation option above, you will have to use th
 
 ### Create Users
 
-Create 9 user named "user01" through "user09", set user-specific passwords (e.g. `EXCITE17user01` for user01), and place the `neurodata` directory found at `/home/someotheruser/neurodata` in each of their home paths.
+Create 9 users named `user01` through `user09`, set user-specific passwords (e.g. `EXCITE17user01` for `user01`), and place the `neurodata` directory found at `/home/someotheruser/neurodata` in each of their home paths.
 
 ```
 ./mkusers.sh "-Uuser"{01..09} -q -p EXCITE17 -c /home/someotheruser/neurodata
