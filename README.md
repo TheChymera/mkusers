@@ -9,14 +9,14 @@ For obvious purposes this script needs to be run as root.
 
 ### [Gentoo Linux](http://en.wikipedia.org/wiki/Gentoo_linux) and [Derivatives](http://en.wikipedia.org/wiki/Category:Gentoo_Linux_derivatives)
 
-The mkusers script is packaged for [Portage](http://en.wikipedia.org/wiki/Portage_(software)) via the [chymeric overlay](https://github.com/TheChymera/chymeric) as **app-misc/mkusers**.
+The mkusers script is available via [Portage](http://en.wikipedia.org/wiki/Portage_(software)) as **app-misc/mkusers** (from the [Chymeric Overlay](https://github.com/TheChymera/chymeric)).
 Just run the following command:
 
 ```
 emerge app-misc/mkusers
 ```
 
-*If you are not yet using this overlay, it can be enabled with just two commands, as seen in [the README](https://github.com/TheChymera/chymeric).*
+*If you are not yet using the Chymeric Overlay, it can be enabled with just two commands, as seen in [its README](https://github.com/TheChymera/chymeric).*
 
 ### Manual Installation (on any Operating System)
 
