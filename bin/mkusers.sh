@@ -3,9 +3,9 @@ set -euo pipefail
 
 
 #checks if run as root:
-if ! [ "`whoami`" == "root" ]
+if ! [[ "$EUID" -eq 0 ]]
 then
-	echo "`basename $0`: must be root."
+	echo "$(basename "$0"): must be root."
 	exit 1
 fi
 
