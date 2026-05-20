@@ -16,15 +16,18 @@ teardown() {
 	rm -rf "$TEST_DIR"
 }
 
+
 run_isolated() {
-	unshare --user --map-root-user --map-users=auto --map-groups=auto --mount -- bash -c "
-		set -eo pipefail
-		mount -t tmpfs tmpfs /etc
-		mount -t tmpfs tmpfs /home
-		mount -t tmpfs tmpfs /var/mail
-		cp -r '$TEST_DIR/etc/'* /etc/
-		eval \"\$@\"
-	" -- "$@"
+    local unshare_flags="--mount"
+    [[ "$EUID" -eq 0 ]] || unshare_flags="--user --map-root-user --map-users=auto --map-groups=auto --mount"
+    unshare $unshare_flags -- bash -c "
+        set -eo pipefail
+        mount -t tmpfs tmpfs /etc
+        mount -t tmpfs tmpfs /home
+        mount -t tmpfs tmpfs /var/mail
+        cp -r '$TEST_DIR/etc/'* /etc/
+        eval \"\$@\"
+    " -- "$@"
 }
 
 @test "user is created" {

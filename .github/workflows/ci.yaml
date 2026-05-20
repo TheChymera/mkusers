@@ -14,4 +14,4 @@ jobs:
         run: sudo apt-get install -y bats
 
       - name: run tests
-        run: bats test/mkusers.bats
+        run: sudo bats test/mkusers.bats
