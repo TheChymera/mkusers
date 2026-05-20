@@ -14,13 +14,10 @@ COPY=""
 PASSWORD_PREFIX=""
 
 # read options
-while getopts ':U:c:p:Rq' flag; do
+while getopts ':U:c:p:R' flag; do
 	case "${flag}" in
 	U)
 		USERS+=("$OPTARG")
-		;;
-	q)
-		QUIET=1
 		;;
 	c)
 		COPY=$OPTARG
@@ -63,7 +60,7 @@ if [ ${REMOVE} -eq 0 ]; then
 	done
 else
 	echo "Preparing to delete users: '${USERS[@]}'"
-	read -p "Are you sure? " -r
+	read -p "Are you sure? [y/N]" -r
 	echo # move to a new line
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
 		echo "Deleting user list:"
