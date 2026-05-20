@@ -50,7 +50,7 @@ if [ ${REMOVE} -eq 0 ]; then
 	echo "Creating user list:"
 	for USER in "${USERS[@]}"; do
 		useradd -m -N -G portage,wheel "$USER"
-		echo "$USER:$PASSWORD_PREFIX$USER" | chpasswd &&
+		echo "$USER:$PASSWORD_PREFIX$USER" | chpasswd
 		echo Created "$USER".
 		if [[ -n "$COPY" ]]; then
 			cp -rf "$COPY" "/home/${USER}/"
