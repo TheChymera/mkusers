@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-
 #checks if run as root:
 if ! [[ "$EUID" -eq 0 ]]
 then
@@ -11,6 +10,8 @@ fi
 
 # setting default variables
 REMOVE=0
+COPY=""
+PASSWORD_PREFIX=""
 
 # read options
 while getopts ':U:c:p:Rq' flag; do
@@ -48,11 +49,13 @@ shift $(($OPTIND - 1))
 if [ ${REMOVE} -eq 0 ]; then
 	echo "Creating user list:"
 	for USER in "${USERS[@]}"; do
-		useradd -m -N -G portage,wheel "$USER" &&
+		useradd -m -N -G portage,wheel "$USER"
 		echo "$USER:$PASSWORD_PREFIX$USER" | chpasswd &&
 		echo Created "$USER".
-		cp -rf $COPY "/home/${USER}/"
-		cd "/home/${USER}/" && chown -R "$USER:wheel" *
+		if [[ -n "$COPY" ]]; then
+			cp -rf "$COPY" "/home/${USER}/"
+			cd "/home/${USER}/" && chown -R "$USER:wheel" *
+		fi
 	done
 else
 	echo "Preparing to delete users: '${USERS[@]}'"
