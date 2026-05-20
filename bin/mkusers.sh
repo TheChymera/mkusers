@@ -42,8 +42,12 @@ while getopts ':U:c:p:Rq' flag; do
 	esac
 done
 
-# shifts pointer to read mandatory output file specification
+
+# shifts pointer to read mandatory user list
 shift $(($OPTIND - 1))
+USERS=("$@")
+
+[[ ${#USERS[@]} -gt 0 ]] || { echo "$(basename "$0"): at least one user required." >&2; exit 1; }
 
 
 if [ ${REMOVE} -eq 0 ]; then
@@ -64,7 +68,7 @@ else
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
 		echo "Deleting user list:"
 		for USER in "${USERS[@]}"; do
-			userdel -r -f "$USER" &&
+			userdel -r -f "$USER"
 			echo Deleted "$USER" and corresponding home directory.
 		done
 	fi

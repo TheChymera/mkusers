@@ -28,14 +28,14 @@ run_isolated() {
 }
 
 @test "user is created" {
-	run run_isolated "$TEST_DIR/mkusers.sh -U testuser && cat /etc/passwd"
+	run run_isolated "$TEST_DIR/mkusers.sh testuser && cat /etc/passwd"
 	echo "$output"
 	[ "$status" -eq 0 ]
 	[ "$(grep -cP '^testuser' <<< "$output")" -eq 1 ]
 }
 
 @test "user is added to default groups" {
-	run run_isolated "$TEST_DIR/mkusers.sh -U testuser && cat /etc/group"
+	run run_isolated "$TEST_DIR/mkusers.sh testuser && cat /etc/group"
 	echo "$output"
 	[ "$status" -eq 0 ]
 	[ "$(grep -cP '^wheel:.*testuser' <<< "$output")" -eq 1 ]
@@ -43,31 +43,32 @@ run_isolated() {
 }
 
 @test "home directory is created" {
-	run run_isolated "$TEST_DIR/mkusers.sh -U testuser && ls /home"
+	run run_isolated "$TEST_DIR/mkusers.sh testuser && ls /home"
 	echo "$output"
 	[ "$status" -eq 0 ]
 	[ "$(grep -cP '^testuser$' <<< "$output")" -eq 1 ]
 }
 
 @test "password is set" {
-	run run_isolated "$TEST_DIR/mkusers.sh -U testuser && cat /etc/shadow"
+	run run_isolated "$TEST_DIR/mkusers.sh testuser && cat /etc/shadow"
 	echo "$output"
 	[ "$status" -eq 0 ]
 	[ "$(grep -cP '^testuser:[^:!*]' <<< "$output")" -eq 1 ]
 }
 
-@test "multiple users are created" {
-	run run_isolated "$TEST_DIR/mkusers.sh -U foo -U bar && cat /etc/passwd"
+@test "user creation goes brrrrrr" {
+	run run_isolated "$TEST_DIR/mkusers.sh user{0..9} && cat /etc/passwd"
 	echo "$output"
 	[ "$status" -eq 0 ]
-	[ "$(grep -cP '^foo' <<< "$output")" -eq 1 ]
-	[ "$(grep -cP '^bar' <<< "$output")" -eq 1 ]
+	for i in {0..9}; do
+		[ "$(grep -cP "^user$i:" <<< "$output")" -eq 1 ]
+	done
 }
 
 @test "copy files in home directory" {
 	mkdir -p "$TEST_DIR/demo_files"
 	touch "$TEST_DIR/demo_files/testfile"
-	run run_isolated "$TEST_DIR/mkusers.sh -U testuser -c $TEST_DIR/demo_files && ls /home/testuser && ls /home/testuser/demo_files"
+	run run_isolated "$TEST_DIR/mkusers.sh -c $TEST_DIR/demo_files testuser && ls /home/testuser && ls /home/testuser/demo_files"
 	echo "$output"
 	[ "$status" -eq 0 ]
 	[ "$(grep -cP '^demo_files$' <<< "$output")" -eq 1 ]
@@ -75,7 +76,7 @@ run_isolated() {
 }
 
 @test "user and home directory are deleted" {
-	run run_isolated "$TEST_DIR/mkusers.sh -U testuser && grep -qP \"^testuser\" /etc/passwd && [ -d /home/testuser ] && echo y | $TEST_DIR/mkusers.sh -R -U testuser && cat /etc/passwd && ls /home"
+	run run_isolated "$TEST_DIR/mkusers.sh testuser && grep -qP \"^testuser\" /etc/passwd && [ -d /home/testuser ] && echo y | $TEST_DIR/mkusers.sh -R testuser && cat /etc/passwd && ls /home"
 	echo "$output"
 	[ "$status" -eq 0 ]
 	[ "$(grep -cP '^testuser' <<< "$output")" -eq 0 ]
