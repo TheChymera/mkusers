@@ -14,11 +14,8 @@ COPY=""
 PASSWORD_PREFIX=""
 
 # read options
-while getopts ':U:c:p:R' flag; do
+while getopts ':c:p:R' flag; do
 	case "${flag}" in
-	U)
-		USERS+=("$OPTARG")
-		;;
 	c)
 		COPY=$OPTARG
 		;;
