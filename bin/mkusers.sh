@@ -54,7 +54,7 @@ if [ ${REMOVE} -eq 0 ]; then
 		echo Created "$USER".
 		if [[ -n "$COPY" ]]; then
 			cp -rf "$COPY" "/home/${USER}/"
-			cd "/home/${USER}/" && chown -R "$USER:$USER" *
+			chown -R "$USER:wheel" "/home/${USER}/"
 		fi
 	done
 else
