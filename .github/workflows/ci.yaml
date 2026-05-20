@@ -1,0 +1,17 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install bats
+        run: sudo apt-get install -y bats
+
+      - name: run tests
+        run: bats test/mkusers.bats
