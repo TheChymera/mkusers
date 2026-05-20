@@ -43,7 +43,6 @@ done
 
 # shifts pointer to read mandatory output file specification
 shift $(($OPTIND - 1))
-ARCHIVE=$1
 
 
 if [ ${REMOVE} -eq 0 ]; then
