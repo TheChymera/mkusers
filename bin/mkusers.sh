@@ -52,7 +52,7 @@ if [ ${REMOVE} -eq 0 ]; then
 	for USER in "${USERS[@]}"; do
 		useradd -m -N -G portage,wheel "$USER"
 		echo "$USER:$PASSWORD_PREFIX$USER" | chpasswd
-		echo Created "$USER".
+		echo "Created $USER."
 		if [[ -n "$COPY" ]]; then
 			cp -rf "$COPY" "/home/${USER}/"
 			chown -R "$USER:wheel" "/home/${USER}/"
@@ -66,7 +66,7 @@ else
 		echo "Deleting user list:"
 		for USER in "${USERS[@]}"; do
 			userdel -r -f "$USER"
-			echo Deleted "$USER" and corresponding home directory.
+			echo "Deleted $USER and corresponding home directory."
 		done
 	fi
 fi
